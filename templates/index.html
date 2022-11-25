@@ -43,10 +43,9 @@
         {% for filme in filmes %}
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <img src="{{ filme.img }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                <h5 class="card-title">{{ filme.nome }} | {{ filme.ano }}</h5>
-                <p class="card-text">{{ filme.desc }}</p>
+                <h5 class="card-title">{{ filme.nome }} | {{ filme.ano_producao }}</h5>
+                <p class="card-text">{{ filme.sinopse }}</p>
                 <a href="#" class="btn btn-primary">Comprar Ingresso</a>
                 </div>
             </div>
