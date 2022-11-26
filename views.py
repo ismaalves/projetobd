@@ -1,5 +1,5 @@
 from app import app, db
-from models import Filme
+from models import Filme, Ator, Sala, Sessao, Carrinho, Cliente, filme_ator, filme_genero, Genero, Hora, Ingresso, Produto, Oferta, Categoria
 from flask import render_template
 
 @app.route("/")

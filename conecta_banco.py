@@ -11,3 +11,28 @@ try:
     )
 except psycopg2.Error as err:
     print(f"{err.pgerror}")
+
+
+#SELECTS "CRUS" EM SQL PELO PYTHON SE FAZEM ASSIM:
+
+#Abre um cursor
+cursor = conn.cursor()
+
+#Passa o comando em SQL como string para o metodo execute()
+select="SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Filme'"
+
+cursor.execute(select)
+
+nomes_colunas = cursor.fetchall()
+
+cursor.execute('select * from "Filme"')
+
+print(f'{nomes_colunas[:3]}')
+
+#Itera sobre a saida do fetchall()
+for filme in cursor.fetchall():
+    print(f'{filme[0]} | {filme[1]} | {filme[2]}')
+
+
+cursor.close()
+conn.close()
