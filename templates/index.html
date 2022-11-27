@@ -44,8 +44,21 @@
         <div class="col">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                <h5 class="card-title">{{ filme.nome }} | {{ filme.ano_producao }}</h5>
+                <h5 class="card-title">{{ filme.nome }} | {{ filme.anoProducao }}</h5>
                 <p class="card-text">{{ filme.sinopse }}</p>
+                <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        {% for elenc in elenco %}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{ elenc.idFilme }}</h5>
+                <p class="card-text">{{ elenc.idElenco }}</p>
                 <a href="#" class="btn btn-primary">Comprar Ingresso</a>
                 </div>
             </div>
