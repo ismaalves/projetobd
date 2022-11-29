@@ -119,8 +119,12 @@ class Ingresso(db.Model):
 class Venda_Ingresso(db.Model):
     __tablename__ = "Venda_Ingresso"
 
-    idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"), primary_key=True)
-    idIngresso = db.Column(db.Integer, db.ForeignKey("Ingresso.idIngresso"), primary_key=True)
+    __table_args__ = (
+        db.PrimaryKeyConstraint("idVenda", "idIngresso"),
+    )
+
+    idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"))
+    idIngresso = db.Column(db.Integer, db.ForeignKey("Ingresso.idIngresso"))
     quantidadecendida = db.Column(db.Integer, nullable=True)
     preco = db.Column(db.Integer, nullable=True)
 
@@ -142,9 +146,13 @@ class Venda(db.Model):
 
 class Venda_Produto(db.Model):
     __tablename__ = "Venda_Produto"
+    
+    __table_args__ = (
+        db.PrimaryKeyConstraint("idVenda", "idproduto"),
+    )
 
-    idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"), primary_key=True)
-    idproduto = db.Column(db.Integer, db.ForeignKey("Produto.idproduto"), primary_key=True)
+    idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"))
+    idproduto = db.Column(db.Integer, db.ForeignKey("Produto.idproduto"))
     quantidadecendida = db.Column(db.Integer, nullable=True)
     preco = db.Column(db.Integer, nullable=True)
 
