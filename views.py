@@ -23,8 +23,9 @@ def sessoes(idFilme):
      sessoes = db.session.execute(query)
      return render_template('sessoes.html', sessao_filme=sessoes, filme=filme, Hora=Hora)
 
-@app.route("/compraringresso/<int:idSessao>")
-def comprarIngresso(idSessao):
+@app.route("/compraringresso/<int:idSessao>%<int:idFilme>")
+def comprarIngresso(idSessao,idFilme):
      sessao = Sessao.query.filter_by(idSessao=idSessao).first()
+     filme = Filme.query.filter_by(idFilme=idFilme).first()
 
-     return render_template('ingresso.html')
+     return render_template('ingresso.html', sessao=sessao, filme=filme)

@@ -40,6 +40,7 @@ class Filme(db.Model):
     sinopse = db.Column(db.Text, nullable=False)
     nacionalidade = db.Column(db.String(11), nullable=False)
     produtora = db.Column(db.String(50), nullable=False)
+    img = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
         return f"{Filme.id}-{Filme.nome}"

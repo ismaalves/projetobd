@@ -8,6 +8,8 @@
                 <div class="card-body">
                 <h5 class="card-title">{{ sessao.dia }} | {{ sessao.horario }}</h5>
                 <p>{{ sessao.idioma }}</p>
+                <p>{{ sessao.formato }}</p>
+                <p>{{ sessao.experiencia }}</p>
                 <a href="{{ url_for('comprarIngresso', idFilme=filme.idFilme, idSessao=sessao.idSessao) }}"  class="btn btn-primary"> Comprar Ingresso</a>
                 </div>
             </div>
