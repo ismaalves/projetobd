@@ -1,17 +1,17 @@
 {% extends "template.html "%}
 {% block conteudo %}
-<h2 align="center" >{{ filme.nome }} | {{ filme.anoProducao }}</h2>
-<div class="row row-cols-1 row-cols-md-5 g-4">
-    {% for sessao in sessao_filme %}
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-            <h5 class="card-title">{{ sessao.experiencia }} | {{ sessao.formato }}</h5>
-            <p>{{ sessao.idioma }}</p>
-            <a href="#"  class="btn btn-primary"> Comprar Ingresso</a>
+    <h2 align="center" >{{ filme.nome }} | {{ filme.anoProducao }}</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        {% for sessao in sessao_filme %}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{ sessao.dia }} | {{ sessao.horario }}</h5>
+                <p>{{ sessao.idioma }}</p>
+                <a href="{{ url_for('comprarIngresso', idFilme=filme.idFilme, idSessao=sessao.idSessao) }}"  class="btn btn-primary"> Comprar Ingresso</a>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
