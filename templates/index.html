@@ -3,10 +3,10 @@
     <div class="row row-cols-1 row-cols-md-5 g-4">
         {% for filme in filmes %}
         <div class="col">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 10rem;">
                 <img src="{{ filme.img }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">{{ filme.nome }} | {{ filme.anoProducao }}</h5>
+                    <h6 align = "center" class="card-title">{{ filme.nome }} | {{ filme.anoProducao }}</h6>
                     <a href="{{ url_for('sessoes', idFilme=filme.idFilme) }}"  class="btn btn-primary">Ver sessoes</a>
                 </div>
             </div>

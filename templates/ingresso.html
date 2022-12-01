@@ -2,5 +2,24 @@
 {% block conteudo %}
     <h2 align="center">{{ filme.nome }} | {{ sessao.dia }} | {{ sessao.horario }}</h2>
     <h2 align="center">{{ sessao.idioma }} | {{ sessao.formato }} | {{ sessao.experiencia }}</h2>
-
+    <form>
+        <div align = "center">
+        {% for tipo in tipos%}
+            <div class="row g-1" style="width: 18rem; margin: 30px;">
+                <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelectGrid">
+                        <option selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <label for="floatingSelectGrid">{{ tipo.nome }}</label>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+        <a href="#"  class="btn btn-primary">Comprar</a>
+        </div>
+    </form>
 {% endblock %}

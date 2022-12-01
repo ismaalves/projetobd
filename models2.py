@@ -1,8 +1,8 @@
 from app import db
 
 
-class filme_elenco(db.Model):
-    __tablename__ = "filme_elenco"
+class Filme_Elenco(db.Model):
+    __tablename__ = "Filme_Elenco"
 
     __table_args__ = (
         db.PrimaryKeyConstraint("idFilme", "idElenco"),
@@ -12,11 +12,11 @@ class filme_elenco(db.Model):
     idElenco = db.Column(db.Integer, db.ForeignKey("Elenco.idElenco"))
 
     def __repr__(self):
-        return f"{filme_elenco.idFilme}-{filme_elenco.idElenco}"
+        return f"{Filme_Elenco.idFilme}-{Filme_Elenco.idElenco}"
 
 
-class filme_genero(db.Model):
-    __tablename__ = "filme_genero"
+class Filme_Genero(db.Model):
+    __tablename__ = "Filme_Genero"
 
     __table_args__ = (
         db.PrimaryKeyConstraint('idFilme', 'idGenero'),
@@ -26,7 +26,7 @@ class filme_genero(db.Model):
     idGenero = db.Column(db.Integer, db.ForeignKey("Genero.idGenero"))
 
     def __repr__(self):
-        return f"{filme_genero.idFilme}-{filme_genero.idGenero}"
+        return f"{Filme_Genero.idFilme}-{Filme_Genero.idGenero}"
 
 
 class Filme(db.Model):
@@ -50,7 +50,7 @@ class Elenco(db.Model):
 
     idElenco = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(50), nullable=False)
-    fkCategoria = db.Column(db.Integer, db.ForeignKey("categoria_elenco.idCategoriaElenco"))
+    fkCategoria = db.Column(db.Integer, db.ForeignKey("Categoria_Elenco.idCategoriaElenco"))
     
     def __repr__(self):
         return f"{Elenco.idElenco}-{Elenco.nome}-{Elenco.fkCategoria}"
@@ -78,7 +78,7 @@ class Sala(db.Model):
 
 
 class Hora(db.Model):
-    __tablename__ = "hora"
+    __tablename__ = "Hora"
 
     idHorario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     horario = db.Column(db.DateTime, nullable=False)
@@ -199,14 +199,14 @@ class Categoria_Ingresso(db.Model):
         return f'{Categoria_Ingresso.idCategoria}-{Categoria_Ingresso.nome}'
 
 
-class categoria_elenco(db.Model):
-    __tablename__ = "categoria_elenco"
+class Categoria_Elenco(db.Model):
+    __tablename__ = "Categoria_Elenco"
 
     idCategoriaElenco = db.Column(db.Integer, primary_key=True, autoincrement=True)
     categoria = db.Column(db.String(10), nullable=False)
 
     def __repr__(self):
-        return f"{categoria_elenco.idCategoriaElenco}-{categoria_elenco.categoria}"
+        return f"{Categoria_Elenco.idCategoriaElenco}-{Categoria_Elenco.categoria}"
 
 
 class Cliente(db.Model):
