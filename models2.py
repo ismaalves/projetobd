@@ -1,6 +1,5 @@
 from app import db
 
-
 class Filme_Elenco(db.Model):
     __tablename__ = "Filme_Elenco"
 
