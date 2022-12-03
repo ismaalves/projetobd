@@ -2,5 +2,41 @@
 {% block conteudo %}
     <h2 align="center">{{ filme.nome }} | {{ sessao.dia }} | {{ sessao.horario }}</h2>
     <h2 align="center">{{ sessao.idioma }} | {{ sessao.formato }} | {{ sessao.experiencia }}</h2>
+    <div align = "center">
+        <div class="row g-1" style="width: 18rem; margin: 30px;">
+            <div class="col-md">
+                <form class="formingresso" action="{{ url_for('venda_ingresso', idSessao=sessao.idSessao) }}" method="post">
+                    <div class="form-group">
+                        {{ form.flamenguista.label(class="form-label")}}
+                        {{ form.flamenguista(class="form-control")}}
+                    </div>
 
+                    <div class="form-group">
+                        {{ form.adulto.label(class="form-label")}}
+                        {{ form.adulto(class="form-control")}}
+                    </div>
+                        
+                    <div class="form-group">
+                        {{ form.estudante.label(class="form-label")}}
+                        {{ form.estudante(class="form-control")}}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.infantil.label(class="form-label")}}
+                        {{ form.infantil(class="form-control")}}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.idoso.label(class="form-label")}}
+                        {{ form.idoso(class="form-control")}}
+                    </div>
+
+                    <div class="form-group" style="margin: 20px;">
+                        {{ form.comprar(class="btn btn-primary") }}
+                    </div>
+        
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

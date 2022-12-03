@@ -1,22 +1,8 @@
 from app import db
 
 
-class filme_elenco(db.Model):
-    __tablename__ = "filme_elenco"
-
-    __table_args__ = (
-        db.PrimaryKeyConstraint("idFilme", "idElenco"),
-    )
-
-    idFilme = db.Column(db.Integer, db.ForeignKey("Filme.idFilme"))
-    idElenco = db.Column(db.Integer, db.ForeignKey("Elenco.idElenco"))
-
-    def __repr__(self):
-        return f"{filme_elenco.idFilme}-{filme_elenco.idElenco}"
-
-
-class filme_genero(db.Model):
-    __tablename__ = "filme_genero"
+class Filme_Genero(db.Model):
+    __tablename__ = "Filme_Genero"
 
     __table_args__ = (
         db.PrimaryKeyConstraint('idFilme', 'idGenero'),
@@ -26,7 +12,7 @@ class filme_genero(db.Model):
     idGenero = db.Column(db.Integer, db.ForeignKey("Genero.idGenero"))
 
     def __repr__(self):
-        return f"{filme_genero.idFilme}-{filme_genero.idGenero}"
+        return f"{Filme_Genero.idFilme}-{Filme_Genero.idGenero}"
 
 
 class Filme(db.Model):
@@ -41,19 +27,12 @@ class Filme(db.Model):
     nacionalidade = db.Column(db.String(11), nullable=False)
     produtora = db.Column(db.String(50), nullable=False)
     img = db.Column(db.Text, nullable=True)
+    diretor = db.Column(db.Text, nullable=False)
+    atores = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"{Filme.id}-{Filme.nome}"
 
-class Elenco(db.Model):
-    __tablename__ = "Elenco"
-
-    idElenco = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome = db.Column(db.String(50), nullable=False)
-    fkCategoria = db.Column(db.Integer, db.ForeignKey("categoria_elenco.idCategoriaElenco"))
-    
-    def __repr__(self):
-        return f"{Elenco.idElenco}-{Elenco.nome}-{Elenco.fkCategoria}"
 
 
 class Genero(db.Model):
@@ -78,7 +57,7 @@ class Sala(db.Model):
 
 
 class Hora(db.Model):
-    __tablename__ = "hora"
+    __tablename__ = "Hora"
 
     idHorario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     horario = db.Column(db.DateTime, nullable=False)
@@ -126,7 +105,7 @@ class Venda_Ingresso(db.Model):
 
     idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"))
     idIngresso = db.Column(db.Integer, db.ForeignKey("Ingresso.idIngresso"))
-    quantidadecendida = db.Column(db.Integer, nullable=True)
+    quantidadevendida = db.Column(db.Integer, nullable=True)
     preco = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
@@ -137,9 +116,9 @@ class Venda(db.Model):
     __tablename__ = "Venda"
 
     idVenda = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    fkCliente = db.Column(db.Integer, db.ForeignKey("Cliente.idCliente"))
-    tipo_pagamento = db.Column(db.Integer, nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
+    fkCliente = db.Column(db.Integer, db.ForeignKey("Cliente.idCliente"), nullable=True)
+    tipo_pagamento = db.Column(db.Integer, nullable=True)
+    estado = db.Column(db.String(7), nullable=False)
 
     def __repr__(self):
         return f"{Venda.idVenda}-{Venda.fkCliente}"
@@ -154,8 +133,8 @@ class Venda_Produto(db.Model):
 
     idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"))
     idproduto = db.Column(db.Integer, db.ForeignKey("Produto.idproduto"))
-    quantidadecendida = db.Column(db.Integer, nullable=True)
-    preco = db.Column(db.Integer, nullable=True)
+    quantidadevendida = db.Column(db.Integer, nullable=True)
+    valortotal = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return f"{Venda_Produto.idVenda}-{Venda_Produto.idproduto}"
@@ -196,17 +175,7 @@ class Categoria_Ingresso(db.Model):
     desconto = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f'{Categoria_Ingresso.idCategoria}-{Categoria_Ingresso.nome}'
-
-
-class categoria_elenco(db.Model):
-    __tablename__ = "categoria_elenco"
-
-    idCategoriaElenco = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    categoria = db.Column(db.String(10), nullable=False)
-
-    def __repr__(self):
-        return f"{categoria_elenco.idCategoriaElenco}-{categoria_elenco.categoria}"
+        return self.idCategoria, self.nome, self.desconto
 
 
 class Cliente(db.Model):
