@@ -5,7 +5,7 @@
     <div align = "center">
         <div class="row g-1" style="width: 18rem; margin: 30px;">
             <div class="col-md">
-                <form class="formingresso" action="{{ url_for('venda_ingresso', idSessao=sessao.idSessao) }}" method="post" enctype="multipart/form-data">
+                <form class="formingresso" action="{{ url_for('venda_ingresso', idSessao=sessao.idSessao) }}" method="post">
                     <div class="form-group">
                         {{ form.flamenguista.label(class="form-label")}}
                         {{ form.flamenguista(class="form-control")}}

@@ -1,0 +1,27 @@
+{% extends "template.html "%}
+{% block conteudo %}
+    <form action="{{ url_for('venda_produto', id_venda=id_venda) }}" method="post">
+        <div class="row row-cols-1 row-cols-md-5 g-4" style="margin: 20px;">
+            {% for produto in produtos %}
+            <div class="col">
+                <div class="card" style="width: 12rem;">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ produto.nome }} | R$ {{ produto.preco }}</h6>
+                        <div align="center">
+                            <div  class="form-outline" style="width: 5rem;">
+                                <input min="0" type="number" value="0" id="typeNumber" name ="{{ produto.idProduto }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div align ="center" style="margin: 20px;">
+            <button href="{{ url_for('venda_produto', id_venda=id_venda) }}" type="submit" class="btn btn-primary btn-salvar">Finalizar Compra</button>
+            <button href="{{ url_for('finalizar_venda', id_venda=id_venda) }}" type="submit" class="btn btn-primary btn-salvar">Nao quero</button>
+        </div>
+    </form>
+    
+    
+    {% endblock %}
