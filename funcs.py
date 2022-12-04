@@ -3,7 +3,6 @@ from models2 import Categoria_Ingresso, Ingresso, Venda, Venda_Produto, Produto
 from sqlalchemy.sql import select,insert
 
 
-
 def cria_venda():
      venda = insert(Venda).values(estado='Aguardando').returning(Venda.idVenda)
      result = db.session.execute(venda)   
@@ -15,13 +14,16 @@ def cria_venda():
      return id_venda
 
 
-def verifica_ingressos(entrada):
+def verifica_ingressos(entrada, idSessao):
+     disp = update_sessao(idSessao)
+     print(disp)
      soma = 0
      for chave, valor in entrada.items():
           if type(valor) == type(1):
-               soma = soma+valor
+               soma = soma + valor
 
-     if(soma > 0):
+     if(soma > 0 and soma <= disp):
+          print(disp)
           return True
      else:
           return False
@@ -64,9 +66,9 @@ def verifica_produtos(form):
      else:
           return False
 
+
 def insert_produtos(form, id_venda):
      new_dados = { int(key): int(value) for key, value in form.items() if value != '0'}
-     preco_total = 0
      for c, v in new_dados.items():
           produto = Produto.query.filter_by(idProduto = c).first()
           insert_prod = insert(Venda_Produto).values(idVenda=id_venda, idproduto=c, quantidadevendida=v, valortotal=(float(v)*float(produto.preco)))
@@ -74,4 +76,26 @@ def insert_produtos(form, id_venda):
      
      db.session.commit()
      return True
+
+
+def update_sessao(idSessao):
+     q1 = f'SELECT COUNT (i."fkSessao") FROM "Ingresso" i where i."fkSessao" = {idSessao} GROUP BY	i."fkSessao";'
      
+     q2 = f'select s.capacidade from "Sala" s inner join "Sessao" s2 on s2."fkSala" = s."idSala" where s2."idSessao" = {idSessao}'
+
+     result1 = db.session.execute(q1)
+     result2 = db.session.execute(q2)
+     t1,t2=0,0
+     
+     for i in result1:
+          t1 = i[0]
+
+     for i in result2:
+          t2 = i[0]
+     
+     return int(t2) - (t1)
+
+'''
+delete from "Ingresso" where "idIngresso" in (select vi."idIngresso" from "Venda_Ingresso" vi where "idVenda" = {});
+delete from "Venda" where "idVenda" = {};
+'''

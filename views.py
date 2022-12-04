@@ -3,7 +3,7 @@ from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto
 from flask import render_template, redirect, request, url_for
 from helpers import FormIngresso
 from funcs import verifica_ingressos, insert_ingresso, verifica_produtos, insert_produtos
-import requests
+import datetime
 
 @app.route("/")
 def index():
@@ -16,9 +16,9 @@ def index():
 @app.route("/sessoes/<int:idFilme>")
 def sessoes(idFilme):
      filme = Filme.query.filter_by(idFilme=idFilme).first()
-
+     dia = f"'{datetime.date.today()}'"
      q = f'select * from versessao \
-          WHERE versessao."idFilme" = {idFilme}'
+          WHERE versessao."idFilme" = {idFilme} and versessao."dia" >= {dia} and versessao."disponibilidade" > 0'
 
      sessoes = db.session.execute(q)
      return render_template('sessoes.html', sessao_filme=sessoes, filme=filme, Hora=Hora)
@@ -47,7 +47,7 @@ def venda_ingresso(idSessao):
           if(i.idSessao == idSessao):
                preco_sessao = float(i.valor)
      
-     if not verifica_ingressos(form.data):
+     if not verifica_ingressos(form.data, idSessao):
           return redirect(url_for('index'))
      else:
           id_venda = insert_ingresso(form.data, idSessao, preco_sessao)
@@ -87,4 +87,16 @@ def finalizar_venda(id_venda):
      venda_ingressos = db.session.execute(q1)
      venda_produtos = db.session.execute(q2)
 
-     return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos)
+     return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos, id_venda=id_venda)
+
+
+@app.route("/cancelar_venda/<int:id_venda>", methods=['POST','GET'])
+def cancelar_venda(id_venda):
+
+     delete = f'delete from "Ingresso" where "idIngresso" in (select vi."idIngresso" from "Venda_Ingresso" vi where "idVenda" = {id_venda}); \
+                 delete from "Venda" where "idVenda" = {id_venda};'
+     
+     db.session.execute(delete)
+     db.session.commit()
+
+     return redirect(url_for("index"))

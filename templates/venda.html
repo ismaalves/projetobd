@@ -1,5 +1,6 @@
 {% extends "template.html "%}
 {% block conteudo %}
+<form method="post">
     <h2 align="center"> Ingressos Comprados</h2>
     <div align = "center">
         <div class="row g-1" style="width: 40rem; margin: 20px;">
@@ -33,4 +34,11 @@
             {% endfor %}
         </div>
     </div>
+    <div align="center" style="margin: 20px;">
+        <button href="#" type="submit" class="btn btn-primary btn-salvar">Finalizar Venda</button>
+    </div>
+</form>
+<form action="{{ url_for('cancelar_venda', id_venda=id_venda) }}" method="post" align="center" style="margin: 20px;">
+    <button href="{{ url_for('cancelar_venda', id_venda=id_venda)}}" type="submit" class="btn btn-danger btn-salvar">Cancelar Venda</button>
+</form>
 {% endblock %}
