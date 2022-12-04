@@ -94,8 +94,3 @@ def update_sessao(idSessao):
           t2 = i[0]
      
      return int(t2) - (t1)
-
-'''
-delete from "Ingresso" where "idIngresso" in (select vi."idIngresso" from "Venda_Ingresso" vi where "idVenda" = {});
-delete from "Venda" where "idVenda" = {};
-'''
