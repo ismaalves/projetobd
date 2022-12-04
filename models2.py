@@ -105,9 +105,8 @@ class Venda_Ingresso(db.Model):
 
     idVenda = db.Column(db.Integer, db.ForeignKey("Venda.idVenda"))
     idIngresso = db.Column(db.Integer, db.ForeignKey("Ingresso.idIngresso"))
-    quantidadevendida = db.Column(db.Integer, nullable=True)
-    preco = db.Column(db.Integer, nullable=True)
 
+    
     def __repr__(self):
         return f"{Venda_Ingresso.idVenda}-{Venda_Ingresso.idIngresso}"
 

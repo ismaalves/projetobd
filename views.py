@@ -75,4 +75,16 @@ def venda_produto(id_venda):
 
 @app.route("/finalizar_venda/<int:id_venda>")
 def finalizar_venda(id_venda):
-     return f"<h1>Cheguei ate aqui{id_venda}</h1>"
+
+     q1 = f'SELECT iv."idVenda", iv."idIngresso", iv.preco, iv."fkCategoria", v.nome, v.numero_da_sala, v.experiencia, v.formato, v.idioma, v.dia, v.horario FROM (SELECT vi."idVenda", i.* FROM "Venda_Ingresso" vi \
+          INNER JOIN "Ingresso" i  ON vi."idIngresso"  = i."idIngresso" WHERE vi."idVenda" = {id_venda}) \
+          AS iv INNER JOIN versessao v \
+          ON iv."fkSessao" = v."idSessao"'
+     
+     q2 = f'SELECT * FROM (SELECT * FROM "Venda_Produto" vp \
+          INNER JOIN "Produto" p ON vp."idproduto"  = p."idProduto" WHERE vp."idVenda" = {id_venda}) as produto_venda'
+
+     venda_ingressos = db.session.execute(q1)
+     venda_produtos = db.session.execute(q2)
+
+     return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos)

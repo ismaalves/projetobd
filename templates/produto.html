@@ -18,10 +18,8 @@
             {% endfor %}
         </div>
         <div align ="center" style="margin: 20px;">
-            <button href="{{ url_for('venda_produto', id_venda=id_venda) }}" type="submit" class="btn btn-primary btn-salvar">Finalizar Compra</button>
+            <button href="{{ url_for('venda_produto', id_venda=id_venda) }}" type="submit" class="btn btn-primary btn-salvar">Comprar</button>
             <button href="{{ url_for('finalizar_venda', id_venda=id_venda) }}" type="submit" class="btn btn-primary btn-salvar">Nao quero</button>
         </div>
     </form>
-    
-    
-    {% endblock %}
+{% endblock %}

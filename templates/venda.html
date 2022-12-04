@@ -1,0 +1,36 @@
+{% extends "template.html "%}
+{% block conteudo %}
+    <h2 align="center"> Ingressos Comprados</h2>
+    <div align = "center">
+        <div class="row g-1" style="width: 40rem; margin: 20px;">
+            {% for ingresso in venda_ingressos%}
+                <div class="col-md">
+                    <div class="card" style="width: 35rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ ingresso.idIngresso }} | {{ ingresso.nome }}</h6>
+                            <p>Sala: {{ ingresso.numero_da_sala }}</p>
+                            <p>Dia: {{ ingresso.dia }} | Horario: {{ ingresso.horario }}</p>
+                            <p>Categoria: {{ ingresso.fkCategoria }} | Preco: {{ ingresso.preco }}</p>
+                            <p>Experiencia: {{ ingresso.experiencia }} | Formato: {{ ingresso.formato }} | Idioma: {{ ingresso.idioma }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <h2 align="center"> Produtos Comprados</h2>
+    <div align = "center">
+        <div class="row g-1" style="width: 40rem; margin: 20px;">
+            {% for produto in venda_produtos %}
+                <div class="col-md">
+                    <div class="card" style="width: 35rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ produto.idProduto }} | {{ produto.nome }}</h6>
+                            <p>Quantidade: {{ produto.quantidadevendida }} | Preco: {{ produto.valortotal }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

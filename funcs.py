@@ -69,8 +69,7 @@ def insert_produtos(form, id_venda):
      preco_total = 0
      for c, v in new_dados.items():
           produto = Produto.query.filter_by(idProduto = c).first()
-          preco_total = float(v)*float(produto.preco)
-          insert_prod = insert(Venda_Produto).values(idVenda=id_venda, idproduto=c, quantidadevendida=v, valortotal=preco_total)
+          insert_prod = insert(Venda_Produto).values(idVenda=id_venda, idproduto=c, quantidadevendida=v, valortotal=(float(v)*float(produto.preco)))
           db.session.execute(insert_prod)
      
      db.session.commit()
