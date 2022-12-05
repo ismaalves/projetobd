@@ -1,6 +1,7 @@
 {% extends "template.html "%}
 {% block conteudo %}
     <form action="{{ url_for('venda_produto', id_venda=id_venda) }}" method="post">
+        
         <div class="row row-cols-1 row-cols-md-5 g-4" style="margin: 20px;">
             {% for produto in produtos %}
             <div class="col">

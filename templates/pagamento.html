@@ -1,0 +1,10 @@
+{% extends "template.html "%}
+{% block conteudo %}
+    <div>
+        <h2 align="center" style="padding: 2rem;">Simulando aba de pagamento da venda: {{ venda.idVenda }}</h2>
+    </div>
+    <div align="center">
+        <a style="margin-right: 10px;" href="{{ url_for('processapagamento', id_venda=venda.idVenda) }}" class="btn btn-outline-success">Pago</a>
+        <a style="margin-right: 10px;" href="{{ url_for('cancelar_venda', id_venda=venda.idVenda) }}" class="btn btn-outline-danger">Nao Pago</a>
+    </div>
+{% endblock %}
