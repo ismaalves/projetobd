@@ -1,9 +1,11 @@
 from app import app, db
-from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto
+from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto, Venda
 from flask import render_template, redirect, request, url_for
-from helpers import FormIngresso
-from funcs import verifica_ingressos, insert_ingresso, verifica_produtos, insert_produtos
+from helpers import FormIngresso, FormVenda
+from funcs import verifica_ingressos, insert_ingresso, verifica_produtos, insert_produtos, total_venda, clientes
 import datetime
+from sqlalchemy import update
+
 
 @app.route("/")
 def index():
@@ -24,7 +26,7 @@ def sessoes(idFilme):
      return render_template('sessoes.html', sessao_filme=sessoes, filme=filme, Hora=Hora)
 
 
-@app.route("/compraringresso/<int:idSessao>%<int:idFilme>")
+@app.route("/compraringresso/<int:idSessao>&<int:idFilme>")
 def comprarIngresso(idSessao,idFilme):
      form = FormIngresso()
      
@@ -86,8 +88,21 @@ def finalizar_venda(id_venda):
 
      venda_ingressos = db.session.execute(q1)
      venda_produtos = db.session.execute(q2)
+     valor_total = total_venda(id_venda)
 
-     return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos, id_venda=id_venda)
+     venda = Venda.query.filter_by(idVenda=id_venda).first()
+
+     form = FormVenda()
+
+     form.idVenda.data = venda.idVenda
+     form.estado.data = venda.estado
+     form.total.data = valor_total
+     form.data_venda.data = datetime.date.today()
+
+     todos_clientes = clientes()
+     form.fkCliente.choices = todos_clientes
+
+     return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos, id_venda=id_venda, valor_total=valor_total, form=form)
 
 
 @app.route("/cancelar_venda/<int:id_venda>", methods=['POST','GET'])
@@ -100,3 +115,31 @@ def cancelar_venda(id_venda):
      db.session.commit()
 
      return redirect(url_for("index"))
+
+
+@app.route("/finalizar/<int:id_venda>", methods=['POST','GET'])
+def finalizar(id_venda):
+     form = FormVenda(request.form)
+     
+     if (form.tipoPagamento.data =='Credito'):
+          form.total.data = float(form.total.data) * 1.10
+     
+     update_venda = (
+          update(Venda).
+          where(Venda.idVenda == id_venda).
+          values(
+               fkCliente=form.fkCliente.data,
+               tipoPagamento=form.tipoPagamento.data,
+               estado=form.estado.data,
+               total=form.total.data,
+               data_venda=form.data_venda.data
+          )
+     )
+     db.session.execute(update_venda)
+     db.session.commit()
+
+     return redirect(url_for('vouchers', id_venda=id_venda))
+
+@app.route("/vouchers/<int:id_venda>", methods=['POST','GET'])
+def vouchers(id_venda):
+     return render_template('final_venda.html',id_venda=id_venda)

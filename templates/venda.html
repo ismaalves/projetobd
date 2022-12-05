@@ -1,44 +1,82 @@
 {% extends "template.html "%}
 {% block conteudo %}
-<form method="post">
-    <h2 align="center"> Ingressos Comprados</h2>
-    <div align = "center">
-        <div class="row g-1" style="width: 40rem; margin: 20px;">
-            {% for ingresso in venda_ingressos%}
-                <div class="col-md">
-                    <div class="card" style="width: 35rem;">
-                        <div class="card-body">
-                            <h6 class="card-title">{{ ingresso.idIngresso }} | {{ ingresso.nome }}</h6>
-                            <p>Sala: {{ ingresso.numero_da_sala }}</p>
-                            <p>Dia: {{ ingresso.dia }} | Horario: {{ ingresso.horario }}</p>
-                            <p>Categoria: {{ ingresso.fkCategoria }} | Preco: {{ ingresso.preco }}</p>
-                            <p>Experiencia: {{ ingresso.experiencia }} | Formato: {{ ingresso.formato }} | Idioma: {{ ingresso.idioma }}</p>
+    <form action="{{ url_for('finalizar', id_venda=id_venda) }}" method="post">
+        <div align="center">
+            <div class="form-group" style="width: 35rem;">
+                {{ form.idVenda.label(class="form-label")}}
+                {{ form.idVenda(class="form-control")}}
+            </div>
+
+            <div class="form-group" style="width: 35rem;">
+                {{ form.fkCliente.label(class="form-label")}}
+                {{ form.fkCliente(class="form-control")}}
+            </div>
+                
+            <div class="form-group" style="width: 35rem;">
+                {{ form.tipoPagamento.label(class="form-label")}}
+                {{ form.tipoPagamento(class="form-control")}}
+            </div>
+            
+            <div class="form-group" style="width: 35rem;">
+                {{ form.estado.label(class="form-label")}}
+                {{ form.estado(class="form-control")}}
+            </div>
+            
+            <div class="form-group" style="width: 35rem;">
+                {{ form.total.label(class="form-label")}}
+                {{ form.total(class="form-control")}}
+            </div>
+
+            <div class="form-group" style="width: 35rem;">
+                {{ form.data_venda.label(class="form-label")}}
+                {{ form.data_venda(class="form-control")}}
+            </div>
+        </div>
+
+        <h2 align="center" style="margin-top: 30px;"> Ingressos Comprados</h2>
+        
+        <div align = "center">
+            <div class="row g-1" style="width: 40rem; margin: 20px;">
+                {% for ingresso in venda_ingressos%}
+                    <div class="col-md">
+                        <div class="card" style="width: 35rem;">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ ingresso.idIngresso }} | {{ ingresso.nome }}</h6>
+                                <p>Sala: {{ ingresso.numero_da_sala }}</p>
+                                <p>Dia: {{ ingresso.dia }} | Horario: {{ ingresso.horario }}</p>
+                                <p>Categoria: {{ ingresso.fkCategoria }} | Preco: {{ ingresso.preco }}</p>
+                                <p>Experiencia: {{ ingresso.experiencia }} | Formato: {{ ingresso.formato }} | Idioma: {{ ingresso.idioma }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <h2 align="center"> Produtos Comprados</h2>
-    <div align = "center">
-        <div class="row g-1" style="width: 40rem; margin: 20px;">
-            {% for produto in venda_produtos %}
-                <div class="col-md">
-                    <div class="card" style="width: 35rem;">
-                        <div class="card-body">
-                            <h6 class="card-title">{{ produto.idProduto }} | {{ produto.nome }}</h6>
-                            <p>Quantidade: {{ produto.quantidadevendida }} | Preco: {{ produto.valortotal }}</p>
+
+        <h2 align="center" style="margin-top: 30px;"> Produtos Comprados</h2>
+        
+        <div align = "center">
+            <div class="row g-1" style="width: 40rem; margin: 20px;">
+                {% for produto in venda_produtos %}
+                    <div class="col-md">
+                        <div class="card" style="width: 35rem;">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ produto.idProduto }} | {{ produto.nome }}</h6>
+                                <p>Quantidade: {{ produto.quantidadevendida }} | Preco: {{ produto.valortotal }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div align="center" style="margin: 20px;">
-        <button href="#" type="submit" class="btn btn-primary btn-salvar">Finalizar Venda</button>
-    </div>
-</form>
-<form action="{{ url_for('cancelar_venda', id_venda=id_venda) }}" method="post" align="center" style="margin: 20px;">
-    <button href="{{ url_for('cancelar_venda', id_venda=id_venda)}}" type="submit" class="btn btn-danger btn-salvar">Cancelar Venda</button>
-</form>
+        
+        <div align="center" class="form-group" style="margin: 20px;">
+            {{ form.finalizar(class="btn btn-primary") }}
+        </div>
+        
+    </form>
+
+    <form action="{{ url_for('cancelar_venda', id_venda=id_venda) }}" method="post" align="center" style="margin: 20px;">
+        <button href="{{ url_for('cancelar_venda', id_venda=id_venda)}}" type="submit" class="btn btn-danger btn-salvar">Cancelar Venda</button>
+    </form>
 {% endblock %}

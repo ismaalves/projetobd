@@ -116,8 +116,10 @@ class Venda(db.Model):
 
     idVenda = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fkCliente = db.Column(db.Integer, db.ForeignKey("Cliente.idCliente"), nullable=True)
-    tipo_pagamento = db.Column(db.Integer, nullable=True)
+    tipoPagamento = db.Column(db.Integer, nullable=True)
     estado = db.Column(db.String(7), nullable=False)
+    total = db.Column(db.Float, nullable=True)
+    data_venda = db.Column(db.Date, nullable=True)
 
     def __repr__(self):
         return f"{Venda.idVenda}-{Venda.fkCliente}"

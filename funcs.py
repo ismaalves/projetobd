@@ -1,6 +1,6 @@
 from app import db
-from models2 import Categoria_Ingresso, Ingresso, Venda, Venda_Produto, Produto
-from sqlalchemy.sql import select,insert
+from models2 import Categoria_Ingresso, Ingresso, Venda, Venda_Produto, Produto, Cliente
+from sqlalchemy.sql import select, insert
 
 
 def cria_venda():
@@ -93,4 +93,41 @@ def update_sessao(idSessao):
      for i in result2:
           t2 = i[0]
      
-     return int(t2) - (t1)
+     return int(t2) - int(t1)
+
+
+def total_venda(id_venda):
+
+     q1 = f'SELECT sum(iv.preco) FROM \
+     (SELECT vi."idVenda", i.* FROM "Venda_Ingresso" vi INNER JOIN "Ingresso" i  ON vi."idIngresso"  = i."idIngresso" WHERE vi."idVenda" = {id_venda}) \
+     AS iv INNER JOIN versessao v \
+     ON iv."fkSessao" = v."idSessao"'
+
+     q2 = f'SELECT sum(produto_venda.valortotal) FROM (SELECT * FROM "Venda_Produto" vp \
+     INNER JOIN "Produto" p ON vp."idproduto"  = p."idProduto" WHERE vp."idVenda" = {id_venda}) as produto_venda'
+
+
+     result1 = db.session.execute(q1)
+     result2 = db.session.execute(q2)
+     t1, t2, total = 0, 0, 0
+     
+     for i in result1:
+          t1 = i[0]
+
+     for i in result2:
+          t2 = i[0]
+     
+     if(t1 and t2):
+          total = float(t2) + float(t1)
+     elif (t1):
+          total = float(t1)
+
+     return total
+
+
+def clientes():
+     q = f'select * from "Cliente" c order by c.nome '
+     result = db.session.execute(q)
+     r_clientes = [(c.idCliente, c.nome) for c in result]
+     
+     return r_clientes
