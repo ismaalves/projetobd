@@ -9,21 +9,18 @@ def cria_venda():
      id_venda = 0
      for i in result.first():
           id_venda = i
-          print(type(i))
      db.session.commit()
      return id_venda
 
 
 def verifica_ingressos(entrada, idSessao):
      disp = update_sessao(idSessao)
-     print(disp)
      soma = 0
      for chave, valor in entrada.items():
           if type(valor) == type(1):
                soma = soma + valor
 
      if(soma > 0 and soma <= disp):
-          print(disp)
           return True
      else:
           return False
@@ -42,7 +39,6 @@ def insert_ingresso(dados, idSessao, preco):
                categoria = Categoria_Ingresso.query.filter_by(nome = c).first()
                preco_total += float(preco)*float(categoria.desconto)
                ingresso = insert(Ingresso).values(preco=(float(preco)*float(categoria.desconto)), fkCategoria=categoria.idCategoria, fkSessao=idSessao).returning(Ingresso.idIngresso)
-               print(ingresso)
                result = db.session.execute(ingresso)
                
                for i in result:
@@ -121,7 +117,8 @@ def total_venda(id_venda):
           total = float(t2) + float(t1)
      elif (t1):
           total = float(t1)
-
+     else:
+          total = float(t2)
      return total
 
 
@@ -129,5 +126,5 @@ def clientes():
      q = f'select * from "Cliente" c order by c.nome '
      result = db.session.execute(q)
      r_clientes = [(c.idCliente, c.nome) for c in result]
-     
+     r_clientes.append(('0',''))
      return r_clientes

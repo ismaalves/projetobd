@@ -180,7 +180,7 @@ class Categoria_Ingresso(db.Model):
 
 
 class Cliente(db.Model):
-    __tablename___ = "Cliente"
+    __tablename___ = 'Cliente'
 
     idCliente = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(50), nullable=False)

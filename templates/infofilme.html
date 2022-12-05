@@ -1,0 +1,24 @@
+{% extends "template.html "%}
+{% block estilo %}
+    style = "background-image: url('{{ filme.img }}');"
+{% endblock %}
+{% block conteudo %}
+    <div align="center" style="margin: 40px;">
+        <div class="card" style="width: 60rem; height: 60rem;">
+            <div class="card-body">
+                <h2 class="card-title" align="center"> {{ filme.nome }} </h2>
+                <div align="center" style="padding: 1rem;">
+                    <p><b>Classificacao:</b> +{{ filme.classificacao }} / <b>Duracao:</b> {{ filme.duracao }} min / <b>Ano de Producao:</b> {{ filme.anoProducao }}</p>
+                    <p><b>Diretor:</b> {{ filme.diretor }}</p>
+                    <p><b>Produtora:</b> {{ filme.produtora }}</p>
+                    <p><b>Nacionalidade:</b> {{ filme.nacionalidade }}</p>
+                    <p><b>Elenco:</b> {{ filme.atores }}</p>
+                    <h4><b>Sinopse:</b></h4>
+                    <p>{{ filme.sinopse }}</p>
+                </div>
+                <a style="margin-right: 10px;" href="{{ url_for('index') }}" class="btn btn-outline-primary">Voltar</a>
+                <a style="margin-left: 10px;" href="{{ url_for('sessoes', idFilme=filme.idFilme) }}" class="btn btn-outline-primary">Ver sessoes</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

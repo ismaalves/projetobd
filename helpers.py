@@ -14,9 +14,9 @@ class FormIngresso(FlaskForm):
 
 class FormVenda(FlaskForm):
     idVenda = IntegerField('ID da Venda', [validators.DataRequired('Invalido'), validators.NumberRange(min=0)])
-    fkCliente = SelectField('ID do Cliente', choices=[], coerce=int)
+    fkCliente = SelectField('ID do Cliente', choices=[], default=None, validate_choice=False)
     tipoPagamento = SelectField('Tipo de Pagamento', [validators.DataRequired('Invalido')], choices=[('Credito', 'Credito'), ('Debito', 'Debito'), ('Dinheiro', 'Dinheiro')])
     estado = StringField('Estado de Pagamento', [validators.DataRequired('Invalido')])
     total = FloatField('Total da Venda', [validators.DataRequired('Invalido'), validators.NumberRange(min=0)])
     data_venda = DateField('Data da Venda', [validators.DataRequired('Invalido')])
-    finalizar = SubmitField('Finalizar')
+    pagar = SubmitField('Prosseguir')

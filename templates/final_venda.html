@@ -1,7 +1,17 @@
 {% extends "template.html "%}
 {% block conteudo %}
-    <div align="center" style="margin: 20px;">
-        <h2>Venda Concluida pegue seus vouchers</h2>
-        <h3>Id da Venda: {{ id_venda }}</h3>
-    </div> 
+    <div align="center" style="margin: 40px;">
+        <div class="card" style="width: 35rem;">
+            <div class="card-body">
+                <h6 class="card-title" align="center" > Venda Concluida: {{ venda.idVenda }} </h6>
+                
+                {% if venda.fkCliente != None %}
+                    <p>Nome: {{ cliente[1] }} | CPF: {{ cliente[2] }}</p>
+                {% endif %}
+
+                <p>Valor total: R$ {{ venda.total }} | Tipo de Pagamento: {{ venda.tipoPagamento }}</p>
+                <p>Data : {{ venda.data_venda }}</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

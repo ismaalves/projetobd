@@ -1,10 +1,10 @@
 from app import app, db
-from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto, Venda
+from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto, Venda, Genero
 from flask import render_template, redirect, request, url_for
 from helpers import FormIngresso, FormVenda
 from funcs import verifica_ingressos, insert_ingresso, verifica_produtos, insert_produtos, total_venda, clientes
 import datetime
-from sqlalchemy import update
+from sqlalchemy import update, select
 
 
 @app.route("/")
@@ -13,6 +13,12 @@ def index():
      filmes = db.session.execute(q)
 
      return render_template('index.html', filmes=filmes)
+
+
+@app.route("/infofilme/<int:idFilme>")
+def infofilme(idFilme):
+     filme = Filme.query.filter_by(idFilme=idFilme).first()
+     return render_template('infofilme.html', filme=filme)
 
 
 @app.route("/sessoes/<int:idFilme>")
@@ -68,7 +74,7 @@ def venda_produto(id_venda):
      form = request.form
 
      if verifica_produtos(form):
-          insert_produtos(form,id_venda)
+          insert_produtos(form, id_venda)
      else:
           redirect(url_for('comprar_produto', id_venda=id_venda))
 
@@ -107,7 +113,6 @@ def finalizar_venda(id_venda):
 
 @app.route("/cancelar_venda/<int:id_venda>", methods=['POST','GET'])
 def cancelar_venda(id_venda):
-
      delete = f'delete from "Ingresso" where "idIngresso" in (select vi."idIngresso" from "Venda_Ingresso" vi where "idVenda" = {id_venda}); \
                  delete from "Venda" where "idVenda" = {id_venda};'
      
@@ -124,6 +129,11 @@ def finalizar(id_venda):
      if (form.tipoPagamento.data =='Credito'):
           form.total.data = float(form.total.data) * 1.10
      
+     if(form.fkCliente.data != '0'):
+          form.fkCliente.data = form.fkCliente.data
+     else:
+          form.fkCliente.data = None
+
      update_venda = (
           update(Venda).
           where(Venda.idVenda == id_venda).
@@ -140,6 +150,16 @@ def finalizar(id_venda):
 
      return redirect(url_for('vouchers', id_venda=id_venda))
 
+
 @app.route("/vouchers/<int:id_venda>", methods=['POST','GET'])
 def vouchers(id_venda):
-     return render_template('final_venda.html',id_venda=id_venda)
+     venda = Venda.query.filter_by(idVenda=id_venda).first()
+
+     if (venda.fkCliente != None):
+          q = f'select * from  "Cliente" c where "idCliente" = {venda.fkCliente} limit 1'
+          result = db.session.execute(q)
+          for i in result:
+               cliente = i
+          return render_template('final_venda.html',venda=venda, cliente=cliente)
+     else:
+          return render_template('final_venda.html',venda=venda)

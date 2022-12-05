@@ -71,12 +71,12 @@
         </div>
         
         <div align="center" class="form-group" style="margin: 20px;">
-            {{ form.finalizar(class="btn btn-primary") }}
+            {{ form.pagar(class="btn btn-outline-primary") }}
         </div>
         
     </form>
 
     <form action="{{ url_for('cancelar_venda', id_venda=id_venda) }}" method="post" align="center" style="margin: 20px;">
-        <button href="{{ url_for('cancelar_venda', id_venda=id_venda)}}" type="submit" class="btn btn-danger btn-salvar">Cancelar Venda</button>
+        <button href="{{ url_for('cancelar_venda', id_venda=id_venda)}}" type="submit" class="btn btn-outline-danger">Cancelar Venda</button>
     </form>
 {% endblock %}
