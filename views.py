@@ -39,7 +39,6 @@ def infofilme(idFilme):
      return render_template('infofilme.html', filme=filme)
 
 
-
 @app.route("/sessoes/<int:idFilme>")
 def sessoes(idFilme):
      filme = Filme.query.filter_by(idFilme=idFilme).first()
@@ -51,7 +50,6 @@ def sessoes(idFilme):
      return render_template('sessoes.html', sessao_filme=sessoes, filme=filme, Hora=Hora)
 
 
-
 @app.route("/compraringresso/<int:idSessao>&<int:idFilme>")
 def comprarIngresso(idSessao,idFilme):
      form = FormIngresso()
@@ -61,7 +59,6 @@ def comprarIngresso(idSessao,idFilme):
      tipo_ingresso = Categoria_Ingresso.query.order_by(Categoria_Ingresso.idCategoria)
      
      return render_template('ingresso.html', sessao=sessao, filme=filme, tipos=tipo_ingresso, form=form)
-
 
 
 #ESTA e UMA URL INTERMEDIARIA
@@ -84,7 +81,6 @@ def venda_ingresso(idSessao):
      return redirect(url_for('comprar_produto', id_venda=id_venda))
 
 
-
 @app.route("/comprar_produto/<int:id_venda>")
 def comprar_produto(id_venda):
      produtos = Produto.query.order_by(Produto.idProduto)
@@ -92,7 +88,6 @@ def comprar_produto(id_venda):
      produtos = db.session.execute(q)
 
      return render_template('produto.html', produtos=produtos, id_venda=id_venda)
-
 
 
 @app.route("/venda_produto/<int:id_venda>", methods=['POST','GET'])
@@ -137,7 +132,6 @@ def finalizar_venda(id_venda):
      return render_template('venda.html', venda_ingressos=venda_ingressos, venda_produtos=venda_produtos, id_venda=id_venda, valor_total=valor_total, form=form)
 
 
-
 @app.route("/cancelar_venda/<int:id_venda>", methods=['POST','GET'])
 def cancelar_venda(id_venda):
      delete = f'delete from "Ingresso" where "idIngresso" in (select vi."idIngresso" from "Venda_Ingresso" vi where "idVenda" = {id_venda}); \
@@ -147,7 +141,6 @@ def cancelar_venda(id_venda):
      db.session.commit()
 
      return redirect(url_for("index"))
-
 
 
 @app.route("/finalizar/<int:id_venda>", methods=['POST','GET'])
@@ -179,7 +172,6 @@ def finalizar(id_venda):
      return redirect(url_for('pagamento', id_venda=id_venda))
 
 
-
 @app.route("/vouchers/<int:id_venda>", methods=['POST','GET'])
 def vouchers(id_venda):
      venda = Venda.query.filter_by(idVenda=id_venda).first()
@@ -192,7 +184,6 @@ def vouchers(id_venda):
           return render_template('final_venda.html',venda=venda, cliente=cliente)
      else:
           return render_template('final_venda.html',venda=venda)
-
 
 
 @app.route("/pagamento/<int:id_venda>", methods=['POST', 'GET'])
