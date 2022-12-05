@@ -1,4 +1,13 @@
 {% extends "template.html "%}
+{% block pesquisa %}
+    <div class="container-fluid">
+        <form method="POST" action="{{ url_for('search')}}" class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="search", name="searched">
+            <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+        </form>
+    </div>
+{% endblock%}
+
 {% block conteudo %}
     <div class="row row-cols-1 row-cols-md-5 g-4" style="margin: 20px;">
         {% for filme in filmes %}

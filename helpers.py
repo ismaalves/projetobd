@@ -20,3 +20,8 @@ class FormVenda(FlaskForm):
     total = FloatField('Total da Venda', [validators.DataRequired('Invalido'), validators.NumberRange(min=0)])
     data_venda = DateField('Data da Venda', [validators.DataRequired('Invalido')])
     pagar = SubmitField('Prosseguir')
+
+
+class FormBusca(FlaskForm):
+    searched = StringField("Pesquisar", [validators.DataRequired('Invalido')])
+    submit = SubmitField('Buscar')

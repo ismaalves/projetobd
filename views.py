@@ -1,7 +1,7 @@
 from app import app, db
 from models2 import Filme, Sessao, Hora, Categoria_Ingresso, Produto, Venda, Oferta
 from flask import render_template, redirect, request, url_for, flash
-from helpers import FormIngresso, FormVenda
+from helpers import FormIngresso, FormVenda, FormBusca
 from funcs import verifica_ingressos, insert_ingresso, verifica_produtos, insert_produtos, total_venda, clientes
 import datetime
 from sqlalchemy import update, select
@@ -14,6 +14,23 @@ def index():
 
      return render_template('index.html', filmes=filmes)
 
+
+@app.context_processor
+def base():
+     form = FormBusca
+     return dict(form=form)
+
+
+@app.route("/buscar", methods=['POST','GET'])
+def search():
+     form = FormBusca()
+     if not form.validate_on_submit():
+          q = f"select * from verfilme where nome like '%{form.searched.data}%'"
+          print(form.searched.data)
+          filmes = db.session.execute(q)
+          return render_template('index.html', filmes=filmes)
+     else:
+          return redirect(url_for('index'))
 
 
 @app.route("/infofilme/<int:idFilme>")
