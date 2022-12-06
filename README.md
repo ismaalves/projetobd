@@ -74,8 +74,10 @@ Link para total visualização: [Modelagem Lógica](https://i.imgur.com/yFWCJhX.
 
 Criação de views para consultas mais utilizadas no banco de dados do cinema, com estes select trazem informações para serem expostas no front end e back end do cinema.
 
-## Modelagem Física para criação do banco de dados em Postgresql
+## Modelagem Física
 
+
+Comandos DDL (Data definition language) para criação do banco de dados Cinema Sauro em postgresql, ao final alter tables com a criação de todas as chaves estrangeiras para referência das tabelas.
 
 
 CREATE TABLE Filme
