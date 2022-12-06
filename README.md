@@ -46,15 +46,15 @@ exibir mais de um filme, em horários diferentes.
 
 ![Modelo E-R](https://i.imgur.com/OIlo8xX.jpg)
 
-Link para total visualizaÃ§Ã£o: [Modelagem conceitual](https://i.imgur.com/OIlo8xX.jpg)
+Link para total visualização: [Modelagem conceitual](https://i.imgur.com/OIlo8xX.jpg)
 
 
 
-## Modelagem LÃ³gica
+## Modelagem Lógica
 
 <img src="https://i.imgur.com/yFWCJhX.jpg" title="" alt="Modelagem" data-align="center">
 
-Link para total visualizaÃ§Ã£o: [Modelagem LÃ³gica](https://i.imgur.com/yFWCJhX.jpg)
+Link para total visualização: [Modelagem Lógica](https://i.imgur.com/yFWCJhX.jpg)
 
 
 
@@ -64,7 +64,7 @@ Link para total visualizaÃ§Ã£o: [Modelagem LÃ³gica](https://i.imgur.com/yF
 
 
 
-## Modelagem FÃ­sica para criaÃ§Ã£o do banco de dados em Postgresql
+## Modelagem Física para criação do banco de dados em Postgresql
 
 
 
@@ -244,7 +244,7 @@ ALTER TABLE "Venda_Ingresso" ADD CONSTRAINT idIngresso FOREIGN KEY (idIngresso) 
 
 
 
-## CriaÃ§Ã£o de Views
+## Criação de Views
 
 
 
@@ -252,7 +252,7 @@ CREATE OR REPLACE VIEW versessao AS
     SELECT SE."idSessao", FI."idFilme",
     FI.nome AS Nome,
     SA.numero AS Numero_Da_Sala, 
-    SE.experiencia AS Experiencia, SE.formato AS Formato, SE.idioma AS Idioma, SE.dia AS Dia, SE.disponibilidade AS Disponibilidade, SE.valor AS PreÃ§o,
+    SE.experiencia AS Experiencia, SE.formato AS Formato, SE.idioma AS Idioma, SE.dia AS Dia, SE.disponibilidade AS Disponibilidade, SE.valor AS Preco,
     H.horario AS Horario
     FROM "Sessao" SE
     JOIN "Hora" H 
@@ -343,12 +343,12 @@ VALUES ('VIP', '3D', 'LEGENDADO', 3, 3, 1, '2022-12-13', 40, 30);
 
 
 INSERT INTO "Filme" (nome, classificacao, duracao, "anoProducao", sinopse, nacionalidade, produtora, img, diretor, atores)
-VALUES ('Avatar: O Caminho da Ãgua', 0, 300, 2022, 'ApÃ³s formar uma famÃ­lia, Jake Sully e Neytiri fazem de tudo para ficarem juntos. No entanto, eles devem sair de casa e explorar as regiÃµes de Pandora quando uma antiga ameaÃ§a ressurge, e Jake deve travar uma guerra difÃ­cil contra os humanos.', 'Estrangeiro', 'Century Studios', 'https://www.claquete.com.br/fotos/filmes/poster/11971_medio.jpg', 'James Cameron', 'Zoe Saldana, Kate Winslet, Sigourney Weaver, David Thewlis, Giovanni Ribisi');
+VALUES ('Avatar: O Caminho da Água', 0, 300, 2022, 'Após formar uma família, Jake Sully e Neytiri fazem de tudo para ficarem juntos. No entanto, eles devem sair de casa e explorar as regiões de Pandora quando uma antiga ameaça ressurge, e Jake deve travar uma guerra difícil contra os humanos.', 'Estrangeiro', 'Century Studios', 'https://www.claquete.com.br/fotos/filmes/poster/11971_medio.jpg', 'James Cameron', 'Zoe Saldana, Kate Winslet, Sigourney Weaver, David Thewlis, Giovanni Ribisi');
 
 
 
 INSERT INTO "Genero" (genero)
-VALUES ('FicÃ§Ã£o cientifica');
+VALUES ('Ficção cientifica');
 
 
 
