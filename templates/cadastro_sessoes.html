@@ -1,0 +1,89 @@
+{% extends "template.html "%}
+{% block conteudo %}
+<br></br>
+<h1 align="center">Cadastro de Sessões</h1>
+<br></br>
+
+<div style="margin: 20px;">
+  <form action="{{ url_for('processaCadastroSessoes') }}" method="post">
+    
+    <br></br>
+
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        {{form.filmes.label(for="inputFilmes")}}
+        {{form.filmes(class="form-control", id="inputFilmes")}}
+      </div>
+
+
+      <div class="form-group col-md-4">
+        {{form.salas.label(for="inputSalas")}}
+        {{form.salas(class="form-control", id="inputSalas")}}
+      </div>
+
+
+      <div class="form-group col-md-4">
+        {{form.horarios.label(for="inputHorarios")}}
+        {{form.horarios(class="form-control", id="inputHorarios")}}
+      </div>
+
+    </div>
+
+    <br></br>
+
+    <div class="row">
+      
+      <div class="form-group col-md-4">
+        {{form.experiencia.label(for="inputExperiencia")}}
+        {{form.experiencia(class="form-control", type="text", id="inputExperiencia")}}
+      </div>
+
+      <div class="form-group col-md-4">
+        {{form.formato.label(for="inputFormato")}}
+        {{form.formato(class="form-control", type="text", id="inputFormato")}}
+      </div>
+
+      <div class="form-group col-md-4">
+        {{form.idioma.label(for="inputIdioma")}}
+        {{form.idioma(class="form-control", type="text", id="inputIdioma")}}
+      </div>
+
+    </div>
+
+    <br></br>
+
+    <div class="row">
+      
+      <div class="form-group col-md-4">
+        {{form.dia.label(for="inputDia")}}
+        {{form.dia(class="form-control", id="inputDia", placeholder="Ex: 2022-12-05")}}
+      </div>
+
+      <div class="form-group col-md-4">
+        {{form.valor.label(for="inputValor")}}
+        {{form.valor(class="form-control", type="text", id="inputValor", placeholder="Valor em R$ da sessão")}}
+      </div>
+
+      <div class="form-group col-md-4">
+        {{form.disponibilidade.label(for="inputDisponibilidade")}}
+        {{form.disponibilidade(class="form-control", type="text", id="inputDisponiblidade", placeholder="Obs: Insira o valor equivalente a disponibilidade da sala escolhida")}}
+      </div>
+
+    </div>
+
+    <br></br>
+    
+    <div class="form-group" align="center">
+      {{ form.cadastrar2(type="submit", class="btn btn-primary") }}
+    </div>
+
+
+
+
+  </form>
+</div>
+
+
+
+{% endblock %}

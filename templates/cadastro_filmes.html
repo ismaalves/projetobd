@@ -1,0 +1,90 @@
+{% extends "template.html "%}
+{% block conteudo %}
+<br></br>
+<h1 align="center">Cadastro de Filmes</h1>
+<br></br>
+<div style="margin: 20px;">
+<form action="{{ url_for('processaCadastro') }}" method="post">
+    <div class="row">
+      
+      <div class="form-group col-md-6">
+        {{form.nome.label(for="inputNome")}}
+        {{form.nome(class="form-control", type="text", id="inputNome", placeholder="Nome do filme")}}
+      </div>
+
+      <div class="form-group col-md-2">
+        {{form.classificacao.label(for="inputClassificação")}}
+        {{form.classificacao(class="form-control", type="number", id="inputClassificação", placeholder="Classificação de idade")}}
+      </div>
+      
+      <div class="form-group col-md-2">
+        {{form.duracao.label(for="inputDuração")}}
+        {{form.duracao(class="form-control", type="number", id="inputDuração", placeholder="Duração em minutos")}}
+      </div>
+    
+      <div class="form-group col-md-2">
+        {{form.ano.label(for="inputAno")}}
+        {{form.ano(class="form-control", type="number", id="inputAno", placeholder="Ano de lançamento")}}
+      </div>
+    
+    </div>
+
+    <br></br>
+    
+    <div class="row">
+        
+      <div class="form-group col-md-6">
+        {{form.sinopse.label(for="inputSinopse")}}
+        {{form.sinopse(class="form-control", type="text", id="inputSinopse", placeholder="Sinopse do filme")}}
+      </div>
+      
+      <div class="form-group col-md-2">
+        {{ form.nacionalidade.label(for="inputNacionalidade") }}
+        {{ form.nacionalidade(type="text", class="form-control", id="inputNacionalidade") }}
+      </div>
+      
+      <div class="form-group col-md-2">
+        {{form.produtor.label(for="inputProd")}}
+        {{form.produtor(class="form-control", type="text", id="inputProd", placeholder="Produtora do filme")}}
+      </div>
+
+      <div class="form-group col-md-2">
+        {{form.diretor.label(for="inputDiretor")}}
+        {{form.diretor(class="form-control", type="text", id="inputDiretor", placeholder="Diretor do filme")}}
+      </div>
+    
+    </div>
+
+    <br></br>
+    
+    <div class="row">
+      
+      <div class="form-group col-md-6">
+        {{ form.genero.label(for="inputGenero") }}
+        {{ form.genero(type="number", class="form-control", id="inputGenero") }}
+      </div>
+      
+      <div class="form-group col-md-6">
+        {{form.atores.label(for="inputAtores")}}
+        {{form.atores(class="form-control", type="text", id="inputAtores", placeholder="Ex: Gabigol, Pedro, Arrascaeta, ...")}}
+      </div>
+    
+    </div>
+
+    <br></br>
+
+    <div class="form-group">
+      {{form.img.label(for="inputImg")}}
+      {{form.img(class="form-control", type="text", id="inputImg", placeholder="Insira o link web da imagem")}}
+    </div>
+  
+    <br></br>
+    
+    <div class="form-group" align="center">
+      {{ form.cadastrar(type="submit", class="btn btn-primary") }}
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

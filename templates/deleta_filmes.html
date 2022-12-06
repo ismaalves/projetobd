@@ -1,0 +1,24 @@
+{% extends "template.html "%}
+{% block conteudo %}
+
+<h1 align="center">Remoção de filmes</h1>
+<br></br>
+
+<div align="center" style="margin: 20px;">
+  <form action="{{ url_for('processadeletaFilmes') }}" method="post">
+    
+    <div class="form-group col-md-4">
+        {{form.filmes.label(for="inputFilmes")}}
+        {{form.filmes(class="form-control", id="inputFilmes")}}
+      </div>
+    
+    <br></br>
+    
+    <div class="form-group" align="center">
+        {{ form.cadastrar2(type="submit", class="btn btn-primary") }}
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}
