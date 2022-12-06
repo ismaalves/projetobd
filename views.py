@@ -174,6 +174,18 @@ def finalizar(id_venda):
 
 @app.route("/vouchers/<int:id_venda>", methods=['POST','GET'])
 def vouchers(id_venda):
+
+     q1 = f'SELECT iv."idVenda", iv."idIngresso", iv.preco, iv."fkCategoria", v.nome, v.numero_da_sala, v.experiencia, v.formato, v.idioma, v.dia, v.horario FROM (SELECT vi."idVenda", i.* FROM "Venda_Ingresso" vi \
+          INNER JOIN "Ingresso" i  ON vi."idIngresso"  = i."idIngresso" WHERE vi."idVenda" = {id_venda}) \
+          AS iv INNER JOIN versessao v \
+          ON iv."fkSessao" = v."idSessao"'
+     
+     q2 = f'SELECT * FROM (SELECT * FROM "Venda_Produto" vp \
+          INNER JOIN "Produto" p ON vp."idproduto"  = p."idProduto" WHERE vp."idVenda" = {id_venda}) as produto_venda'
+
+     venda_ingressos = db.session.execute(q1)
+     venda_produtos = db.session.execute(q2)
+
      venda = Venda.query.filter_by(idVenda=id_venda).first()
      flash("Venda Concluida")
      if (venda.fkCliente != None):
@@ -181,9 +193,9 @@ def vouchers(id_venda):
           result = db.session.execute(q)
           for i in result:
                cliente = i
-          return render_template('final_venda.html',venda=venda, cliente=cliente)
+          return render_template('final_venda.html',venda=venda, cliente=cliente,venda_ingressos=venda_ingressos, venda_produtos=venda_produtos)
      else:
-          return render_template('final_venda.html',venda=venda)
+          return render_template('final_venda.html',venda=venda, venda_ingressos=venda_ingressos, venda_produtos=venda_produtos)
 
 
 @app.route("/pagamento/<int:id_venda>", methods=['POST', 'GET'])
