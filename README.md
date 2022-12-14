@@ -48,7 +48,17 @@ exibir mais de um filme, em horários diferentes.
 
 Link para total visualização: [Modelagem conceitual](https://i.imgur.com/OIlo8xX.jpg)
 
+    A tabela filme é onde está armazenada as informações de filmes, foi normalizada usando a primeira regra normal em gênero por seus dados serem multi-valorados, tendo relacionamento N,N, pois um filme pode ser comedia e ação, por exemplo.
 
+    O mesmo para a tabela sessão, onde sala e hora possuem cardinalidade 0,1 e sessão possui cardinalidade 1,1 em ambas, pois sessão pode ter apenas 1 sala ou 1 hora, está tabela é onde está armazenada informações das sessões disponíveis em exibição.
+
+    Ingresso possui normalização de sua tabela desconto por ser multi-valorada e é a tabela de maior movimentação no banco de dados.
+
+    Produto é a tabela da lanchonete, onde se encontra todos os dados de produtos referente a consumo no cinema e suas ofertas
+
+    Cliente possui os dados cadastrais e é dela que é retida informações para uma venda.
+
+    Venda é a tabela que constitui todos os dados de vendas de produtos e ingressos, possui relacionamento N,N com ambas já que um produto ou ingresso pode está em várias vendas, e vendas pode ter vários ingressos e produtos.
 
 ## Modelagem Lógica
 
@@ -62,10 +72,12 @@ Link para total visualização: [Modelagem Lógica](https://i.imgur.com/yFWCJhX.
 
 ![View](https://i.imgur.com/bFkYmsy.png)
 
+Criação de views para consultas mais utilizadas no banco de dados do cinema, com estes select trazem informações para serem expostas no front end e back end do cinema.
+
+## Modelagem Física
 
 
-## Modelagem Física para criação do banco de dados em Postgresql
-
+Comandos DDL (Data definition language) para criação do banco de dados Cinema Sauro em postgresql, ao final alter tables com a criação de todas as chaves estrangeiras para referência das tabelas.
 
 
 CREATE TABLE Filme
@@ -247,6 +259,7 @@ ALTER TABLE "Venda_Ingresso" ADD CONSTRAINT idIngresso FOREIGN KEY (idIngresso) 
 ## Criação de Views
 
 
+View para ver dados de sessão junto a filme:
 
 CREATE OR REPLACE VIEW versessao AS
     SELECT SE."idSessao", FI."idFilme",
@@ -264,6 +277,7 @@ CREATE OR REPLACE VIEW versessao AS
     ORDER BY SE."idSessao";
 
 
+View para ver as principais colunas de filme:
 
 CREATE OR REPLACE VIEW verfilme AS
     SELECT FI."idFilme", FI.nome, FI."anoProducao", FI.img
@@ -271,6 +285,7 @@ CREATE OR REPLACE VIEW verfilme AS
     ORDER BY "idFilme";
 
 
+View com informações completas de uma venda e os dados do cliente comprador:
 
 CREATE OR REPLACE VIEW venda_cliente
 AS SELECT v."idVenda",
@@ -287,6 +302,7 @@ AS SELECT v."idVenda",
      LEFT JOIN "Cliente" c ON v."fkCliente" = c."idCliente";
 
 
+View para mostrar os N gêneros do filme:
 
 CREATE OR REPLACE VIEW genero_filme
 AS SELECT fg."idFilme",
@@ -295,6 +311,7 @@ AS SELECT fg."idFilme",
      JOIN "Genero" g ON fg."idGenero" = g."idGenero";
 
 
+View para produtos que ainda estão em comercialização:
 
 CREATE OR REPLACE VIEW ver_produtos
 AS SELECT p."idProduto",
@@ -307,6 +324,7 @@ AS SELECT p."idProduto",
   WHERE p.quantidade > 0;
 
 
+View para hora do filme:
 
 CREATE OR REPLACE VIEW ver_hora
 AS SELECT "Hora"."idHorario",
@@ -314,6 +332,7 @@ AS SELECT "Hora"."idHorario",
    FROM "Hora";
 
 
+View para informações da sala:
 
 CREATE OR REPLACE VIEW ver_sala
 AS SELECT "Sala"."idSala",
